@@ -69,9 +69,9 @@ export function ScrollReveal({
         const viewportHeight = scroller ? scroller.clientHeight : window.innerHeight
         const scrollerTop = scroller ? scroller.getBoundingClientRect().top : 0
         const elementTop = rect.top - scrollerTop
-        const start = viewportHeight * 0.82
-        const end = viewportHeight * 0.22
-        const progress = (start - elementTop) / (start - end + rect.height)
+        const start = viewportHeight * 0.95
+        const end = viewportHeight * 0.52
+        const progress = (start - elementTop) / (start - end)
 
         setScrollProgress(clamp(progress, 0, 1))
       })
@@ -109,8 +109,8 @@ export function ScrollReveal({
           }
 
           const currentIndex = wordIndex++
-          const wordStart = (currentIndex / Math.max(wordCount, 1)) * 0.75
-          const wordProgress = clamp((scrollProgress - wordStart) / 0.25, 0, 1)
+          const wordStart = (currentIndex / Math.max(wordCount, 1)) * 0.55
+          const wordProgress = clamp((scrollProgress - wordStart) / 0.3, 0, 1)
           const opacity = baseOpacity + wordProgress * (1 - baseOpacity)
           const blur = enableBlur ? blurStrength * (1 - wordProgress) : 0
 

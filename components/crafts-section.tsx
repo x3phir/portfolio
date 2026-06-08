@@ -1,153 +1,198 @@
 import { AnimatedContent } from '@/components/reactbits/animated-content'
-import { SpotlightCard } from '@/components/reactbits/spotlight-card'
+import { CardBody, CardContainer, CardItem } from '@/components/ui/3d-card'
+
+const projects = [
+  {
+    title: 'IoT Water Quality Monitoring System',
+    label: 'IoT / Monitoring',
+    description:
+      'Membuat konsep sistem monitoring kualitas air berbasis IoT menggunakan sensor TDS, turbidity, dan pH untuk membaca, mengkalibrasi, dan menampilkan data kualitas air.',
+    tags: ['IoT', 'TDS Sensor', 'Turbidity', 'pH Sensor', 'Calibration'],
+    metrics: ['TDS', 'NTU', 'pH'],
+    visual: 'water',
+    accent: 'from-cyan-400/20 via-lime/10 to-blue-500/20',
+  },
+  {
+    title: '4PAWS — Cat Adoption Web App',
+    label: 'Web App / Shelter',
+    description:
+      'Mengembangkan aplikasi adopsi kucing berbasis web dengan fitur katalog kucing, form adopsi, donasi shelter, laporan kucing, dashboard admin, dan pengelolaan data shelter.',
+    tags: [
+      'Catalog',
+      'Adoption Form',
+      'Donation',
+      'Admin Dashboard',
+      'Shelter Data',
+    ],
+    metrics: ['Cats', 'Donate', 'Reports'],
+    visual: 'cat',
+    accent: 'from-lime/25 via-yellow-300/10 to-orange-400/20',
+  },
+] as const
+
+type Project = (typeof projects)[number]
+
+function WaterQualityVisual() {
+  const readings = [
+    { label: 'TDS', value: '182 ppm', width: 'w-2/3' },
+    { label: 'Turbidity', value: '4.2 NTU', width: 'w-1/2' },
+    { label: 'pH', value: '7.1', width: 'w-4/5' },
+  ]
+
+  return (
+    <div className="relative h-48 overflow-hidden rounded-3xl border border-white/10 bg-black/35 p-5">
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-cyan-300/25 via-cyan-300/10 to-transparent" />
+      <div className="absolute left-6 top-6 h-16 w-16 rounded-2xl border border-lime/30 bg-lime/15 shadow-[0_0_35px_rgba(207,255,4,0.18)]">
+        <div className="absolute left-1/2 top-full h-16 w-px -translate-x-1/2 bg-lime/30" />
+        <div className="absolute left-1/2 top-[4.8rem] h-3 w-3 -translate-x-1/2 rounded-full bg-lime" />
+      </div>
+      <div className="relative ml-auto grid w-44 gap-3">
+        {readings.map((reading) => (
+          <div key={reading.label} className="rounded-2xl border border-white/10 bg-white/[0.06] p-3 backdrop-blur">
+            <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-white/45">
+              <span>{reading.label}</span>
+              <span>{reading.value}</span>
+            </div>
+            <div className="h-1.5 rounded-full bg-white/10">
+              <div className={`${reading.width} h-full rounded-full bg-lime`} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="absolute bottom-5 left-5 flex items-center gap-2 text-xs text-cyan-100/70">
+        <span className="h-2 w-2 rounded-full bg-lime" />
+        Live sensor calibration
+      </div>
+    </div>
+  )
+}
+
+function CatAdoptionVisual() {
+  const cats = ['Milo', 'Luna', 'Oyen']
+
+  return (
+    <div className="relative h-48 overflow-hidden rounded-3xl border border-white/10 bg-black/35 p-5">
+      <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-lime/20 blur-2xl" />
+      <div className="grid grid-cols-3 gap-3">
+        {cats.map((cat, index) => (
+          <div key={cat} className="rounded-2xl border border-white/10 bg-white/[0.06] p-3 backdrop-blur">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-end justify-center rounded-full bg-lime/20">
+              <div className="h-7 w-8 rounded-t-full bg-lime/80" />
+            </div>
+            <p className="text-center text-xs font-semibold text-white">{cat}</p>
+            <p className="text-center text-[10px] text-white/45">#{index + 1}</p>
+          </div>
+        ))}
+      </div>
+      <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-lime/20 bg-lime/10 p-3">
+        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-white/55">
+          <span>Shelter donation</span>
+          <span>72%</span>
+        </div>
+        <div className="mt-2 h-1.5 rounded-full bg-white/10">
+          <div className="h-full w-[72%] rounded-full bg-lime" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ProjectVisual({ type }: { type: Project['visual'] }) {
+  if (type === 'water') {
+    return <WaterQualityVisual />
+  }
+
+  return <CatAdoptionVisual />
+}
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    <AnimatedContent delay={100 + index * 110} distance={30} duration={1000}>
+      <CardContainer containerClassName="py-0" className="w-full">
+        <CardBody className="group/card relative h-auto min-h-[520px] w-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#101010] p-6 shadow-2xl shadow-black/40 transition-colors duration-300 hover:border-lime/40 md:p-7">
+          <div className={`absolute inset-0 bg-gradient-to-br ${project.accent}`} />
+          <div className="absolute inset-px rounded-[calc(2rem-1px)] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0))]" />
+
+          <div className="relative z-10 flex items-start justify-between gap-4">
+            <CardItem
+              translateZ={42}
+              className="rounded-full border border-lime/25 bg-lime/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-lime"
+            >
+              {project.label}
+            </CardItem>
+            <CardItem translateZ={36} className="text-sm font-semibold text-white/35">
+              0{index + 1}
+            </CardItem>
+          </div>
+
+          <CardItem
+            as="h3"
+            translateZ={74}
+            className="relative z-10 mt-10 max-w-md text-3xl font-bold leading-tight text-white md:text-4xl"
+          >
+            {project.title}
+          </CardItem>
+
+          <CardItem
+            as="p"
+            translateZ={58}
+            className="relative z-10 mt-4 max-w-xl text-sm leading-relaxed text-white/65"
+          >
+            {project.description}
+          </CardItem>
+
+          <CardItem translateZ={92} className="relative z-10 mt-8 w-full">
+            <ProjectVisual type={project.visual} />
+          </CardItem>
+
+          <div className="relative z-10 mt-8 grid grid-cols-3 gap-2">
+            {project.metrics.map((metric, metricIndex) => (
+              <CardItem
+                key={metric}
+                translateZ={32 + metricIndex * 12}
+                className="rounded-2xl border border-white/10 bg-white/[0.05] px-3 py-3 text-center text-xs font-medium text-white/70"
+              >
+                {metric}
+              </CardItem>
+            ))}
+          </div>
+
+          <div className="relative z-10 mt-5 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <CardItem
+                key={tag}
+                translateZ={24}
+                className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/55"
+              >
+                {tag}
+              </CardItem>
+            ))}
+          </div>
+        </CardBody>
+      </CardContainer>
+    </AnimatedContent>
+  )
+}
 
 export function CraftsSection() {
   return (
-    <section id="crafts" className="bg-primary text-primary-foreground py-24 md:py-32 px-6">
-      <div className="mx-auto max-w-5xl">
+    <section id="crafts" className="bg-primary px-6 py-24 text-primary-foreground md:py-32">
+      <div className="mx-auto max-w-6xl">
         <AnimatedContent distance={18} duration={850}>
-          <p className="text-sm font-medium mb-16 md:mb-24">crafts.</p>
-        </AnimatedContent>
-        
-        {/* Grid of crafts mockups - matching the original design */}
-        <AnimatedContent delay={100} distance={30} duration={1000}>
-          <SpotlightCard className="bg-[#1a1a1a] p-4 md:p-6" spotlightColor="rgba(207, 255, 4, 0.16)">
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
-            {/* Column 1 - Tall phone mockup */}
-            <div className="col-span-1 row-span-2 bg-gradient-to-b from-[#2a2a2a] to-[#1f1f1f] rounded-xl overflow-hidden relative group">
-              <div className="absolute top-3 left-3 flex gap-1.5 z-10">
-                <span className="text-[8px] text-white/60 bg-white/10 px-2 py-0.5 rounded-full">About</span>
-                <span className="text-[8px] text-white/60 bg-white/10 px-2 py-0.5 rounded-full">Events</span>
-                <span className="text-[8px] text-lime bg-lime/20 px-2 py-0.5 rounded-full">Play</span>
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-10 h-10 rounded-full bg-lime flex items-center justify-center">
-                  <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-[#1a3a1a] to-transparent flex items-end p-4">
-                <div>
-                  <p className="text-lime text-lg font-bold leading-tight">AY SOCCER</p>
-                  <p className="text-lime text-lg font-bold leading-tight">OGETGER</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 2 - Top: Person image placeholder */}
-            <div className="bg-gradient-to-br from-[#3a3a3a] to-[#2a2a2a] rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMmEyYTJhIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE1IiBmaWxsPSIjNDQ0Ii8+CjxlbGxpcHNlIGN4PSI1MCIgY3k9Ijc1IiByeD0iMjUiIHJ5PSIyMCIgZmlsbD0iIzQ0NCIvPgo8L3N2Zz4=')] bg-cover bg-center opacity-60"></div>
-              <div className="absolute bottom-2 left-2 right-2">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
-                  <p className="text-[8px] text-white/80">Portfolio</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 3 - Lime Get Ready card */}
-            <div className="bg-lime rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-3">
-                <p className="text-black font-bold text-sm md:text-base">Get ready</p>
-                <div className="mt-2 space-y-0.5 text-center">
-                  <div className="flex items-center justify-between text-[9px] text-black/70 gap-3">
-                    <span>Wake</span>
-                    <span>7:00</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[9px] text-black/70 gap-3">
-                    <span>Sleep</span>
-                    <span>4:45</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[9px] text-black/70 gap-3">
-                    <span>Run</span>
-                    <span>1.8</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 4 - Soccer field */}
-            <div className="bg-gradient-to-b from-[#4a6a4a] to-[#3a5a3a] rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute inset-0 flex items-end p-3">
-                <div className="w-full">
-                  <div className="h-8 border border-white/20 rounded"></div>
-                </div>
-              </div>
-              <div className="absolute top-1/2 right-1/4 w-2 h-2 bg-white/60 rounded-full"></div>
-            </div>
-
-            {/* Row 2 - Column 2: Find app */}
-            <div className="bg-gradient-to-br from-lime/90 to-lime rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute inset-0 flex flex-col p-3">
-                <p className="text-black font-bold text-xl tracking-tighter">FIND</p>
-                <div className="mt-auto">
-                  <p className="text-[8px] text-black/60 font-medium">GAME AWAY</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Row 2 - Column 3: Profile */}
-            <div className="bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-lime/20 border-2 border-lime/40 flex items-center justify-center overflow-hidden">
-                  <div className="w-8 h-8 rounded-full bg-lime/30"></div>
-                </div>
-                <div className="mt-2 text-center">
-                  <p className="text-[10px] text-white font-medium">Valerie</p>
-                  <p className="text-[8px] text-white/50">Vilela</p>
-                </div>
-              </div>
-              <div className="absolute bottom-2 left-2 right-2">
-                <div className="h-1 bg-white/10 rounded-full">
-                  <div className="h-1 bg-lime w-3/4 rounded-full"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Row 2 - Column 4: Success */}
-            <div className="bg-lime rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center">
-                  <svg className="w-6 h-6 text-lime" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <p className="mt-2 text-[10px] text-black font-medium">Congratulation</p>
-              </div>
-            </div>
-
-            {/* Row 3 - Column 2: Dark profile */}
-            <div className="bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute top-2 left-2">
-                <span className="text-[8px] text-white/40">Taylor</span>
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-[#333] overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-[#444] to-[#333]"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Row 3 - Column 3: Empty profile circle */}
-            <div className="bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] rounded-xl overflow-hidden aspect-square relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-10 h-10 rounded-full border-2 border-dashed border-white/20"></div>
-              </div>
-            </div>
-
-            {/* Row 3 - Column 4: About section */}
-            <div className="bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] rounded-xl overflow-hidden aspect-square relative p-3">
-              <p className="text-[8px] text-white/40 mb-2">About</p>
-              <div className="space-y-1.5">
-                <div className="h-0.5 bg-white/10 rounded w-full"></div>
-                <div className="h-0.5 bg-white/10 rounded w-4/5"></div>
-                <div className="h-0.5 bg-white/10 rounded w-3/5"></div>
-                <div className="h-0.5 bg-white/10 rounded w-2/3"></div>
-              </div>
-            </div>
+          <div className="mb-16 flex flex-col gap-4 md:mb-24 md:flex-row md:items-end md:justify-between">
+            <p className="text-sm font-medium">crafts.</p>
+            <p className="max-w-md text-sm leading-relaxed text-primary-foreground/60 md:text-right">
+              Project pilihan dari portfolio saya, berfokus pada sistem praktis,
+              alur produk, dan interface yang mudah digunakan.
+            </p>
           </div>
-          </SpotlightCard>
         </AnimatedContent>
+
+        <div className="grid gap-8 lg:grid-cols-2">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   )
