@@ -8,21 +8,19 @@ const projects = [
     title: 'IoT Water Quality Monitoring System',
     label: 'IoT Monitoring',
     description:
-      'I created a concept for an IoT-based water quality monitoring system that uses TDS, turbidity, and pH sensors to read, calibrate, and display water quality data.',
+      'A compact IoT concept for reading and displaying water quality data from TDS, turbidity, and pH sensors.',
     image: '/iot-monitoring-systems.png',
     imageAlt: 'IoT water quality monitoring system project preview',
-    tags: ['IoT', 'TDS Sensor', 'Turbidity', 'pH Sensor', 'Calibration'],
-    highlights: ['Sensor readings', 'Data calibration', 'Quality dashboard'],
+    tags: ['IoT', 'Water Quality', 'Sensors'],
   },
   {
     title: '4PAWS - Cat Adoption Web App',
     label: 'Shelter Web App',
     description:
-      'I developed a web-based cat adoption application with a cat catalog, adoption forms, shelter donations, cat reports, an admin dashboard, and shelter data management.',
+      'A web app for browsing adoptable cats, submitting adoption forms, and managing shelter data.',
     image: '/4paws.png',
     imageAlt: '4PAWS cat adoption web app project preview',
-    tags: ['Catalog', 'Adoption Form', 'Donation', 'Admin Dashboard', 'Shelter Data'],
-    highlights: ['Cat catalog', 'Adoption flow', 'Shelter dashboard'],
+    tags: ['Adoption', 'Catalog', 'Dashboard'],
   },
 ] as const
 
@@ -34,7 +32,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <AnimatedContent delay={100 + index * 110} distance={30} duration={1000}>
       <CardContainer containerClassName="py-0" className="w-full">
-        <CardBody className="group/card relative h-auto min-h-[560px] w-full overflow-hidden rounded-[2rem] border-2 border-white bg-black p-4 md:p-5">
+        <CardBody className="group/card relative h-auto min-h-[470px] w-full overflow-hidden rounded-[2rem] border-2 border-white bg-black p-4 md:p-5">
           <div className="absolute left-5 top-5 h-16 w-16 rounded-full border-2 border-white/25" />
           <div className="absolute right-6 top-8 grid grid-cols-3 gap-1 opacity-25">
             {Array.from({ length: 9 }).map((_, dotIndex) => (
@@ -49,7 +47,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               isEven ? '-rotate-1' : 'rotate-1'
             }`}
           >
-            <div className="relative h-64 overflow-hidden rounded-[1.1rem] border-2 border-black bg-white md:h-72">
+            <div className="relative h-64 overflow-hidden rounded-[1.1rem] border-2 border-black bg-white">
               <Image
                 src={project.image}
                 alt={project.imageAlt}
@@ -92,19 +90,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.description}
           </CardItem>
 
-          <div className="relative z-10 mt-7 grid gap-2 sm:grid-cols-3">
-            {project.highlights.map((highlight, highlightIndex) => (
-              <CardItem
-                key={highlight}
-                translateZ={28 + highlightIndex * 10}
-                className="rounded-2xl border-2 border-white/50 bg-white px-3 py-3 text-center text-xs font-black uppercase tracking-[0.12em] text-black"
-              >
-                {highlight}
-              </CardItem>
-            ))}
-          </div>
-
-          <div className="relative z-10 mt-5 flex flex-wrap gap-2">
+          <div className="relative z-10 mt-7 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <CardItem
                 key={tag}
