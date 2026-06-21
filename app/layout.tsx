@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
+import { CustomCursor } from '@/components/custom-cursor'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -41,6 +42,7 @@ export default function RootLayout({
     <html lang="en" className={`${spaceGrotesk.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
+        <CustomCursor />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

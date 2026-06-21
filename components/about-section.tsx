@@ -23,7 +23,7 @@ export function AboutSection() {
           
           <AnimatedContent delay={180} direction="left" distance={24} duration={900}>
             <div className="flex justify-end">
-              <p className="text-xs md:text-sm text-primary-foreground/70 max-w-sm text-right leading-relaxed">
+              <p className="text-xs md:text-sm text-primary-foreground/70 max-w-sm text-right mt-15 leading-relaxed">
                 Driven by curiosity and execution. I build solutions that 
                 are not only functional but also efficient and 
                 thoughtfully designed.
