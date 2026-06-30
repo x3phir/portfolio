@@ -87,7 +87,7 @@ export function SkillsSection() {
             <p className="mb-10 text-center text-sm text-muted-foreground">
               language & <span className="font-semibold text-foreground">framework</span>
             </p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12 px-30">
               {languages.map((item) => (
                 <div
                   key={item.name}
@@ -104,7 +104,7 @@ export function SkillsSection() {
             <p className="mb-10 text-center text-sm text-muted-foreground">
               <span className="font-semibold text-foreground">tools</span>
             </p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12 px-30">
               {tools.map((item) => (
                 <div
                   key={item.name}

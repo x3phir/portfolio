@@ -35,6 +35,15 @@ const projects = [
     imageAlt: 'Ngeaiyuk guided interview project preview',
     tags: ['AI', 'Blueprint', 'Project Planning'],
   },
+  {
+    title: 'FishInt',
+    label: 'Fishing Intelligence Platform',
+    description:
+      'The Fishing Intelligence Platform is a comprehensive web-based GIS and AI solution designed to transform raw satellite detection data into actionable spatial intelligence for fisheries research.',
+    image: '/FishInt.png',
+    imageAlt: 'FishInt guided interview project preview',
+    tags: ['Fishing', 'GIS', 'Machine Learning'],
+  },
 ] as const
 
 type Project = (typeof projects)[number]
